@@ -3,6 +3,9 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+        container: {
+            center: true,
+        },
       colors: {
         // Primary
        "green-light" : 'hsl(148, 38%, 91%)',
