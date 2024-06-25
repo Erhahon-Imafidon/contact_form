@@ -116,7 +116,25 @@ const Contact = () => {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         required
+                        rows='4'
                         className='px-3 py-4 focus:outline-none border border-green-medium rounded-md resize-none'/>
+                </div>
+                {/*CONSENT SECTION*/}
+                <div
+                    className='flex items-center py-4 w-full space-x-4'>
+                    <input
+                        id='consent'
+                        type='checkbox'
+                        required
+                        className='cursor-pointer w-4 h-4 checked:bg-green-medium appearance-none  border border-green-medium'
+                    />
+                    <label
+                        htmlFor="consent"
+                        className="text-base text-grey-dark">I consent to being contacted by the team
+
+                        <span
+                            className='ml-2 text-green-medium'>*</span>
+                    </label>
                 </div>
             </form>
         </section>
