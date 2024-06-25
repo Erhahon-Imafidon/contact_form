@@ -24,7 +24,7 @@ const Contact = () => {
     }
   return (
       <>
-        <section className="container px-4 md:px-8 w-1/2 max-w-[375px] xl:max-w-[1440px] flex flex-col p-8 bg-white rounded-xl">
+        <section className="container px-4 md:px-8 w-full lg:w-1/2 max-w-[375px] xl:max-w-[1440px] flex flex-col p-8 bg-white rounded-xl">
             <h1 className="font-karla text-2xl text-grey-dark font-bold">Contact Us</h1>
             <form onSubmit={handleSubmit} className="flex flex-col w-full space-y-6 mt-4 font-karla">
 
@@ -59,6 +59,48 @@ const Contact = () => {
                             required
                             className='px-3 py-4 focus:outline-none border border-green-medium rounded-md'
                         />
+                    </div>
+                </div>
+                {/*EMAIL SECTION*/}
+                <div
+                    className="flex flex-col w-full space-y-2">
+                    <label
+                        htmlFor="email"
+                        className="text-base text-grey-dark">Email Address
+                        <span
+                            className='ml-2 text-green-medium'>*</span>
+                    </label>
+                    <input
+                        ref={firstRef}
+                        type="text"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className='px-3 py-4 focus:outline-none border border-green-medium rounded-md'
+                    />
+                </div>
+                {/*RADIO BUTTON SECTION*/}
+                <div
+                    className='flex flex-col w-full space-y-2'>
+                    <label
+                        htmlFor="query"
+                        className="text-base text-grey-dark">Query Type
+                        <span
+                            className='ml-2 text-green-medium'>*</span>
+                    </label>
+                    <div
+                        className='flex flex-col w-full md:flex-row space-y-4 md:space-y-0 md:space-x-3'>
+                        {/*GENERAL ENQUIRY*/}
+                        <button type='button' className='w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-medium rounded-md'>
+                            <div className='w-4 h-4 rounded-full border border-green-light'></div>
+                            <p className='text-grey-dark'>General Enquiry</p>
+                        </button>
+                        {/*SUPPORT REQUEST */}
+                        <button type='button' className='w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-medium rounded-md'>
+                            <div className='w-4 h-4 rounded-full border border-green-light'></div>
+                            <p className='text-grey-dark'>Support Request</p>
+                        </button>
                     </div>
                 </div>
             </form>
