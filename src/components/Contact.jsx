@@ -100,7 +100,7 @@ const Contact = () => {
                                 type="button"
                                 className="w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md"
                             >
-                                <div className="w-4 h-4 rounded-full border border-green-light"></div>
+                                <div className="w-4 h-4 rounded-full border border-green-default"></div>
                                 <p className="text-grey-dark">
                                     General Enquiry
                                 </p>
@@ -110,7 +110,7 @@ const Contact = () => {
                                 type="button"
                                 className="w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md"
                             >
-                                <div className="w-4 h-4 rounded-full border border-green-light"></div>
+                                <div className="w-4 h-4 rounded-full border border-green-default"></div>
                                 <p className="text-grey-dark">
                                     Support Request
                                 </p>
