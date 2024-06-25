@@ -117,7 +117,7 @@ const Contact = () => {
                         onChange={(e) => setMessage(e.target.value)}
                         required
                         rows='4'
-                        className='px-3 py-4 focus:outline-none border border-green-medium rounded-md resize-none'/>
+                        className='px-3 py-4 focus:outline-none border border-green-light rounded-md resize-none'/>
                 </div>
                 {/*CONSENT SECTION*/}
                 <div
@@ -136,6 +136,8 @@ const Contact = () => {
                             className='ml-2 text-green-medium'>*</span>
                     </label>
                 </div>
+                {/*SUBMIT BUTTON SECTION*/}
+                <button className='w-full p-4 bg-green-medium text-white rounded-md font-bold text-base'>Submit</button>
             </form>
         </section>
       </>
