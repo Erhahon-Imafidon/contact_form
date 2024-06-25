@@ -103,6 +103,17 @@ const Contact = () => {
                         </button>
                     </div>
                 </div>
+                {/*MESSAGE SECTION*/}
+                <div
+                    className='flex flex-col w-full space-y-2'>
+                    <label
+                        htmlFor="email"
+                        className="text-base text-grey-dark">Email
+                        Address
+                        <span
+                            className='ml-2 text-green-medium'>*</span>
+                    </label>
+                </div>
             </form>
         </section>
       </>
