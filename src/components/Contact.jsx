@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import {useState, useEffect, useRef} from 'react'
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/
 
@@ -51,7 +51,6 @@ const Contact = () => {
                             <span className='ml-2 text-green-medium'>*</span>
                         </label>
                         <input
-                            ref={firstRef}
                             type="text"
                             id="firstname"
                             value={lastName}
@@ -71,7 +70,6 @@ const Contact = () => {
                             className='ml-2 text-green-medium'>*</span>
                     </label>
                     <input
-                        ref={firstRef}
                         type="text"
                         id="email"
                         value={email}
@@ -107,12 +105,18 @@ const Contact = () => {
                 <div
                     className='flex flex-col w-full space-y-2'>
                     <label
-                        htmlFor="email"
-                        className="text-base text-grey-dark">Email
-                        Address
+                        htmlFor="message"
+                        className="text-base text-grey-dark">message
+
                         <span
                             className='ml-2 text-green-medium'>*</span>
                     </label>
+                    <textarea
+                        id='message'
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        required
+                        className='px-3 py-4 focus:outline-none border border-green-medium rounded-md resize-none'/>
                 </div>
             </form>
         </section>
