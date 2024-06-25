@@ -26,11 +26,15 @@ const Contact = () => {
       <>
         <section className="container px-4 md:px-8 w-1/2 max-w-[375px] xl:max-w-[1440px] flex flex-col p-8 bg-white rounded-xl">
             <h1 className="font-karla text-2xl text-grey-dark font-bold">Contact Us</h1>
-            <form onSubmit={handleSubmit} className="flex flex-col w-full space-y-6 mt-4">
+            <form onSubmit={handleSubmit} className="flex flex-col w-full space-y-6 mt-4 font-karla">
+
                 {/*Name Section*/}
-                <div className="flex flex-col md:flex-row space-y-4 md:space-x-2">
+                <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-3">
+                    {/*FIRST NAME*/}
                     <div className='flex flex-col w-full md:w-1/2 space-y-2'>
-                        <label htmlFor="firstname" className="">First Name</label>
+                        <label htmlFor="firstname" className="text-base text-grey-dark">First Name
+                            <span className='ml-2 text-green-medium'>*</span>
+                        </label>
                         <input
                             ref={firstRef}
                             type="text"
@@ -38,7 +42,22 @@ const Contact = () => {
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
                             required
-                            className='p-2 focus:outline-none'
+                            className='px-2 py-4 focus:outline-none border border-green-medium rounded-md'
+                        />
+                    </div>
+                    {/*LAST NAME */}
+                    <div className='flex flex-col w-full md:w-1/2 space-y-2'>
+                        <label htmlFor="firstname" className="text-base text-grey-dark">Last Name
+                            <span className='ml-2 text-green-medium'>*</span>
+                        </label>
+                        <input
+                            ref={firstRef}
+                            type="text"
+                            id="firstname"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            required
+                            className='px-3 py-4 focus:outline-none border border-green-medium rounded-md'
                         />
                     </div>
                 </div>
