@@ -7,9 +7,17 @@ const Contact = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [validEmail, setValidEmail] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
     const [message, setMessage] = useState('');
 
     const [error, setError] = useState(false);
+
+    // Effect to verify the email
+    useEffect(() => {
+        const result = EMAIL_REGEX.test(email);
+        console.log(result);
+        setValidEmail(result);
+    }, [email]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
