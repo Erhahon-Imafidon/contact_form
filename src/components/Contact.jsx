@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { MdOutlineCheckBoxOutlineBlank } from 'react-icons/md';
-import { RiCheckboxFill } from 'react-icons/ri';
 import SuccessMsg from './SuccessMessage.jsx';
 
 import RadioButton from '../assets/images/icon-radio-selected.svg';
+import Checkbox from '../assets/images/icon-checkbox-check.svg';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -42,6 +41,7 @@ const Contact = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
     };
+
     return (
         <>
             {success ? (
@@ -102,6 +102,9 @@ const Contact = () => {
                                 required
                                 className="px-3 py-4 focus:outline-none border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer  rounded-md"
                             />
+                            <p className="text-red text-xs hidden ">
+                                This field is required
+                            </p>
                         </div>
                     </div>
                     {/*EMAIL SECTION*/}
@@ -121,7 +124,11 @@ const Contact = () => {
                             required
                             className="px-3 py-4 focus:outline-none border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md"
                         />
+                        <p className="text-red text-xs hidden ">
+                            Please enter a valid email address
+                        </p>
                     </div>
+
                     {/*RADIO BUTTON SECTION*/}
                     <div className="flex flex-col w-full space-y-2">
                         <label
@@ -171,6 +178,9 @@ const Contact = () => {
                                 </p>
                             </button>
                         </div>
+                        <p className="text-red text-xs hidden">
+                            Please select a query type
+                        </p>
                     </div>
                     {/*MESSAGE SECTION*/}
                     <div className="flex flex-col w-full space-y-2">
@@ -189,27 +199,38 @@ const Contact = () => {
                             rows="4"
                             className="px-3 py-4 focus:outline-none border border-green-light hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md resize-none"
                         />
+                        <p className="text-red text-xs hidden ">
+                            This field is required
+                        </p>
                     </div>
                     {/*CONSENT SECTION*/}
-                    <div className="flex items-center py-4 w-full space-x-4">
-                        <button
-                            id="consent"
-                            onClick={() => setIsChecked(!isChecked)}
-                        >
-                            {!isChecked ? (
-                                <MdOutlineCheckBoxOutlineBlank className="text-green-default text-xl" />
-                            ) : (
-                                <RiCheckboxFill className="text-green-medium text-xl" />
-                            )}
-                        </button>
+                    <div>
+                        <div className="flex items-center py-4 w-full space-x-4">
+                            <button
+                                id="consent"
+                                onClick={() => setIsChecked(!isChecked)}
+                            >
+                                {!isChecked ? (
+                                    <div className="w-4 h-4 border border-green-default"></div>
+                                ) : (
+                                    <Checkbox className="w-4" />
+                                )}
+                            </button>
 
-                        <label
-                            htmlFor="consent"
-                            className="text-base text-grey-dark"
-                        >
-                            I consent to being contacted by the team
-                            <span className="ml-2 text-green-medium">*</span>
-                        </label>
+                            <label
+                                htmlFor="consent"
+                                className="text-base text-grey-dark"
+                            >
+                                I consent to being contacted by the team
+                                <span className="ml-2 text-green-medium">
+                                    *
+                                </span>
+                            </label>
+                        </div>
+                        <p className="text-red text-xs hidden">
+                            To submit this form, please consent to being
+                            contacted
+                        </p>
                     </div>
                     {/*SUBMIT BUTTON SECTION*/}
                     <button className="w-full p-4 bg-green-medium hover:bg-green-dark transition duration-300 text-white rounded-md font-bold text-base">
