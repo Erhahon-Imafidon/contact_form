@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { MdOutlineCheckBoxOutlineBlank } from 'react-icons/md';
 import { RiCheckboxFill } from 'react-icons/ri';
+import SuccessMsg from './SuccessMessage.jsx';
 
 import RadioButton from '../assets/images/icon-radio-selected.svg';
 
@@ -26,11 +27,13 @@ const Contact = () => {
         setValidEmail(result);
     }, [email]);
 
+    // Enquiry Function
     const handleEnquiryClick = () => {
         setEnquiry(true);
         setRequest(false);
     };
 
+    // Request Function
     const handleRequestClick = () => {
         setEnquiry(false);
         setRequest(true);
@@ -41,7 +44,13 @@ const Contact = () => {
     };
     return (
         <>
-            <section className="container px-4 md:px-8 w-full lg:w-1/2 max-w-[375px] xl:max-w-[1440px] flex flex-col p-8 bg-white rounded-xl">
+            {success ? (
+                <SuccessMsg
+                    title="message sent!"
+                    subTitle="Thanks for completing the form we'll be in touch soon"
+                />
+            ) : null}
+            <section className="container px-4 md:px-8 w-full h-screen lg:w-1/2 max-w-[375px] xl:max-w-[1440px] flex flex-col p-8 bg-white rounded-xl">
                 <h1 className="font-karla text-2xl text-grey-dark font-bold">
                     Contact Us
                 </h1>

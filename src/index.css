@@ -17,4 +17,8 @@
         font-weight: 400;
         src: url("assets/Karla-Regular.ttf") format("truetype");
     }
+
+    body {
+        @apply bg-green-light
+    }
 }

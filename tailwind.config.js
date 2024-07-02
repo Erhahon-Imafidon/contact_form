@@ -15,6 +15,7 @@ export default {
                 red: 'hsl(0, 66%, 54%)',
                 // Neutral
                 white: 'hsl(0, 0%, 100%)',
+                'white-dull': 'hsl(0, 0%, 80%)',
                 'grey-medium': 'hsl(186, 15%, 59%)',
                 'grey-dark': 'hsl(187, 24%, 22%)',
             },
