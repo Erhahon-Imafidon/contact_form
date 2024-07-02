@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
+import { MdOutlineCheckBoxOutlineBlank } from 'react-icons/md';
+import { RiCheckboxFill } from 'react-icons/ri';
+
 import RadioButton from '../assets/images/icon-radio-selected.svg';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -10,6 +13,7 @@ const Contact = () => {
     const [validEmail, setValidEmail] = useState(false);
     const [enquiry, setEnquiry] = useState(false);
     const [request, setRequest] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
     const [message, setMessage] = useState('');
 
     const [error, setError] = useState(false);
@@ -169,12 +173,17 @@ const Contact = () => {
                     </div>
                     {/*CONSENT SECTION*/}
                     <div className="flex items-center py-4 w-full space-x-4">
-                        <input
+                        <button
                             id="consent"
-                            type="checkbox"
-                            required
-                            className="cursor-pointer w-4 h-4 checked:bg-green-medium appearance-none  border border-green-medium"
-                        />
+                            onClick={() => setIsChecked(!isChecked)}
+                        >
+                            {!isChecked ? (
+                                <MdOutlineCheckBoxOutlineBlank className="text-green-default text-xl" />
+                            ) : (
+                                <RiCheckboxFill className="text-green-medium text-xl" />
+                            )}
+                        </button>
+
                         <label
                             htmlFor="consent"
                             className="text-base text-grey-dark"
