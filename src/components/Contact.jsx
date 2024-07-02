@@ -26,6 +26,16 @@ const Contact = () => {
         setValidEmail(result);
     }, [email]);
 
+    const handleEnquiryClick = () => {
+        setEnquiry(true);
+        setRequest(false);
+    };
+
+    const handleRequestClick = () => {
+        setEnquiry(false);
+        setRequest(true);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
     };
@@ -115,7 +125,7 @@ const Contact = () => {
                         <div className="flex flex-col w-full md:flex-row space-y-4 md:space-y-0 md:space-x-3">
                             {/*GENERAL ENQUIRY*/}
                             <button
-                                onClick={() => setEnquiry(!enquiry)}
+                                onClick={handleEnquiryClick}
                                 type="button"
                                 className={
                                     enquiry
@@ -134,7 +144,7 @@ const Contact = () => {
                             </button>
                             {/*SUPPORT REQUEST */}
                             <button
-                                onClick={() => setRequest(!request)}
+                                onClick={handleRequestClick}
                                 type="button"
                                 className={
                                     request
