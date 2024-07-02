@@ -8,7 +8,8 @@ const Contact = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [validEmail, setValidEmail] = useState(false);
-    const [isChecked, setIsChecked] = useState(false);
+    const [enquiry, setEnquiry] = useState(false);
+    const [request, setRequest] = useState(false);
     const [message, setMessage] = useState('');
 
     const [error, setError] = useState(false);
@@ -110,11 +111,15 @@ const Contact = () => {
                         <div className="flex flex-col w-full md:flex-row space-y-4 md:space-y-0 md:space-x-3">
                             {/*GENERAL ENQUIRY*/}
                             <button
-                                onClick={() => setIsChecked(!isChecked)}
+                                onClick={() => setEnquiry(!enquiry)}
                                 type="button"
-                                className="w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md"
+                                className={
+                                    enquiry
+                                        ? 'bg-green-light text-white w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md'
+                                        : 'w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md'
+                                }
                             >
-                                {!isChecked ? (
+                                {!enquiry ? (
                                     <div className="w-4 h-4 rounded-full border border-green-default"></div>
                                 ) : (
                                     <RadioButton />
@@ -125,10 +130,19 @@ const Contact = () => {
                             </button>
                             {/*SUPPORT REQUEST */}
                             <button
+                                onClick={() => setRequest(!request)}
                                 type="button"
-                                className="w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md"
+                                className={
+                                    request
+                                        ? 'bg-green-light text-white w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md'
+                                        : 'w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md'
+                                }
                             >
-                                <div className="w-4 h-4 rounded-full border border-green-default"></div>
+                                {!request ? (
+                                    <div className="w-4 h-4 rounded-full border border-green-default"></div>
+                                ) : (
+                                    <RadioButton />
+                                )}
                                 <p className="text-grey-dark">
                                     Support Request
                                 </p>
