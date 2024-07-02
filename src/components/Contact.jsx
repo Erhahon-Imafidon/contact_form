@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
+import RadioButton from '../assets/images/icon-radio-selected.svg';
 
-const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/;
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const Contact = () => {
     const [firstName, setFirstName] = useState('');
@@ -11,6 +12,7 @@ const Contact = () => {
     const [message, setMessage] = useState('');
 
     const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     // Effect to verify the email
     useEffect(() => {
@@ -53,6 +55,9 @@ const Contact = () => {
                                 required
                                 className="px-2 py-4 focus:outline-none border border-green-light hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md"
                             />
+                            <p className="text-red text-xs hidden ">
+                                This field is required
+                            </p>
                         </div>
                         {/*LAST NAME */}
                         <div className="flex flex-col w-full md:w-1/2 space-y-2">
@@ -105,10 +110,15 @@ const Contact = () => {
                         <div className="flex flex-col w-full md:flex-row space-y-4 md:space-y-0 md:space-x-3">
                             {/*GENERAL ENQUIRY*/}
                             <button
+                                onClick={() => setIsChecked(!isChecked)}
                                 type="button"
                                 className="w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md"
                             >
-                                <div className="w-4 h-4 rounded-full border border-green-default"></div>
+                                {!isChecked ? (
+                                    <div className="w-4 h-4 rounded-full border border-green-default"></div>
+                                ) : (
+                                    <RadioButton />
+                                )}
                                 <p className="text-grey-dark">
                                     General Enquiry
                                 </p>
