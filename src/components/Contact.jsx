@@ -40,6 +40,26 @@ const Contact = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // If none of this state exist
+        if (!firstName && !lastName && !email && !validEmail && !isChecked) {
+            setError(true);
+        }
+
+        // If both the QueryType Options are false
+        if (!enquiry && !request) {
+            setError(true);
+        }
+
+        setSuccess(true);
+        setError(false);
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setEnquiry(false);
+        setRequest(false);
+        setMessage('');
+        setIsChecked(false);
     };
 
     return (
@@ -207,6 +227,7 @@ const Contact = () => {
                     <div>
                         <div className="flex items-center py-4 w-full space-x-4">
                             <button
+                                type="button"
                                 id="consent"
                                 onClick={() => setIsChecked(!isChecked)}
                             >
@@ -233,7 +254,10 @@ const Contact = () => {
                         </p>
                     </div>
                     {/*SUBMIT BUTTON SECTION*/}
-                    <button className="w-full p-4 bg-green-medium hover:bg-green-dark transition duration-300 text-white rounded-md font-bold text-base">
+                    <button
+                        type="submit"
+                        className="w-full p-4 bg-green-medium hover:bg-green-dark transition duration-300 text-white rounded-md font-bold text-base"
+                    >
                         Submit
                     </button>
                 </form>
