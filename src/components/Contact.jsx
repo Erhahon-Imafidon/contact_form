@@ -15,9 +15,16 @@ const Contact = () => {
     const [request, setRequest] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [message, setMessage] = useState('');
-
-    const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
+
+    const [error, setError] = useState({
+        firstName: false,
+        lastName: false,
+        email: false,
+        queryType: false,
+        message: false,
+        consent: false,
+    });
 
     // Effect to verify the email
     useEffect(() => {
@@ -41,14 +48,45 @@ const Contact = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // If none of this state exist
-        if (!firstName && !lastName && !email && !validEmail && !isChecked) {
-            setError(true);
+        // Reset error and success states
+        setError({
+            firstName: false,
+            lastName: false,
+            email: false,
+            queryType: false,
+            message: false,
+            consent: false,
+        });
+        setSuccess(false);
+
+        // Input Validation
+        if (!firstName.trim()) {
+            setError((prevErrors) => ({ ...prevErrors, firstName: true }));
         }
 
-        // If both the QueryType Options are false
+        if (!lastName.trim()) {
+            setError((prevErrors) => ({ ...prevErrors, lastName: true }));
+        }
+
+        if (!validEmail) {
+            setError((prevErrors) => ({ ...prevErrors, email: true }));
+        }
+
         if (!enquiry && !request) {
-            setError(true);
+            setError((prevErrors) => ({ ...prevErrors, queryType: true }));
+        }
+
+        if (!message.trim()) {
+            setError((prevErrors) => ({ ...prevErrors, message: true }));
+        }
+
+        if (!isChecked) {
+            setError((prevErrors) => ({ ...prevErrors, consent: true }));
+        }
+
+        // If any errors exist, prevent submission
+        if (Object.values(error).some((error) => error)) {
+            return;
         }
 
         setSuccess(true);
@@ -97,9 +135,11 @@ const Contact = () => {
                                 value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
                                 required
-                                className="px-2 py-4 focus:outline-none border border-green-light hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md"
+                                className={`px-2 py-4 focus:outline-none border ${error.firstName ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md`}
                             />
-                            <p className="text-red text-xs hidden ">
+                            <p
+                                className={`text-red text-xs ${error.firstName ? 'block' : 'hidden'}`}
+                            >
                                 This field is required
                             </p>
                         </div>
@@ -120,9 +160,11 @@ const Contact = () => {
                                 value={lastName}
                                 onChange={(e) => setLastName(e.target.value)}
                                 required
-                                className="px-3 py-4 focus:outline-none border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer  rounded-md"
+                                className={`px-3 py-4 focus:outline-none border ${error.lastName ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer  rounded-md`}
                             />
-                            <p className="text-red text-xs hidden ">
+                            <p
+                                className={`text-red text-xs ${error.lastName ? 'block' : 'hidden'}`}
+                            >
                                 This field is required
                             </p>
                         </div>
@@ -142,9 +184,11 @@ const Contact = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className="px-3 py-4 focus:outline-none border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md"
+                            className={`px-3 py-4 focus:outline-none border ${error.email ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md`}
                         />
-                        <p className="text-red text-xs hidden ">
+                        <p
+                            className={`text - red text-xs ${error.email ? 'block' : 'hidden'}`}
+                        >
                             Please enter a valid email address
                         </p>
                     </div>
@@ -198,7 +242,9 @@ const Contact = () => {
                                 </p>
                             </button>
                         </div>
-                        <p className="text-red text-xs hidden">
+                        <p
+                            className={`text-red text-xs ${error.queryType ? 'block' : 'hidden'}`}
+                        >
                             Please select a query type
                         </p>
                     </div>
@@ -217,9 +263,11 @@ const Contact = () => {
                             onChange={(e) => setMessage(e.target.value)}
                             required
                             rows="4"
-                            className="px-3 py-4 focus:outline-none border border-green-light hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md resize-none"
+                            className={`px-3 py-4 focus:outline-none border ${error.message ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md resize-none`}
                         />
-                        <p className="text-red text-xs hidden ">
+                        <p
+                            className={`text-red text-xs ${error.message ? 'block' : 'hidden'}`}
+                        >
                             This field is required
                         </p>
                     </div>
