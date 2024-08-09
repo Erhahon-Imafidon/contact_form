@@ -133,11 +133,11 @@ const Contact = () => {
                                 }}
                                 className={`px-2 py-4 focus:outline-none border ${error.firstName ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md`}
                             />
-                            {error.lastName && (
-                                <p className={`text-red text-xs`}>
-                                    This field is required
-                                </p>
-                            )}
+                            <p
+                                className={`text-red text-xs ${error.firstName ? 'block' : 'hidden'}`}
+                            >
+                                This field is required
+                            </p>
                         </div>
                         {/*LAST NAME */}
                         <div className="flex flex-col w-full md:w-1/2 space-y-2">
@@ -163,11 +163,11 @@ const Contact = () => {
                                 }}
                                 className={`px-3 py-4 focus:outline-none border ${error.lastName ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer  rounded-md`}
                             />
-                            {error.lastName && (
-                                <p className={`text-red text-xs`}>
-                                    This field is required
-                                </p>
-                            )}
+                            <p
+                                className={`text-red text-xs ${error.lastName ? 'block' : 'hidden'}`}
+                            >
+                                This field is required
+                            </p>
                         </div>
                     </div>
                     {/*EMAIL SECTION*/}
@@ -192,11 +192,11 @@ const Contact = () => {
                             }}
                             className={`px-3 py-4 focus:outline-none border ${error.email ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md`}
                         />
-                        {error.email && (
-                            <p className={`text-red text-xs`}>
-                                Please enter a valid email address
-                            </p>
-                        )}
+                        <p
+                            className={`text-red text-xs ${error.email ? 'block' : 'hidden'}`}
+                        >
+                            Please enter a valid email address
+                        </p>
                     </div>
 
                     {/*RADIO BUTTON SECTION*/}
@@ -270,13 +270,13 @@ const Contact = () => {
                                 }));
                             }}
                             rows="4"
-                            className={`px-3 py-4 focus:outline-none border ${error ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md resize-none`}
+                            className={`px-3 py-4 focus:outline-none border ${error.message ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md resize-none`}
                         />
-                        {error.message && (
-                            <p className={`text-red text-xs`}>
-                                This field is required
-                            </p>
-                        )}
+                        <p
+                            className={`text-red text-xs ${error.message ? 'block' : 'hidden'}`}
+                        >
+                            This field is required
+                        </p>
                     </div>
                     {/*CONSENT SECTION*/}
                     <div>
