@@ -7,6 +7,8 @@ import Checkbox from '../assets/images/icon-checkbox-check.svg';
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const Contact = () => {
+    const errRef = useRef();
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -16,7 +18,8 @@ const Contact = () => {
     const [isChecked, setIsChecked] = useState(false);
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
-    const [errMsg, setErrMsg] = useState('');
+
+    const [error, setError] = useState({});
 
     // Effect to verify the email
     useEffect(() => {
@@ -24,10 +27,6 @@ const Contact = () => {
         console.log(result);
         setValidEmail(result);
     }, [email]);
-
-    useEffect(() => {
-        setErrMsg('');
-    }, [firstName, lastName, email, message, isChecked]);
 
     // Enquiry Function
     const handleEnquiryClick = () => {
@@ -43,35 +42,6 @@ const Contact = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        if (firstName === '' && lastName === '' && message === '') {
-            setErrMsg('This field is required');
-            return;
-        }
-
-        if (email === '' && !validEmail) {
-            setErrMsg('Please enter a valid email address');
-            return;
-        }
-
-        if (!enquiry && !request) {
-            setErrMsg('Please select a query type');
-            return;
-        }
-
-        if (!isChecked) {
-            setErrMsg('To submit this form, please consent to being contacted');
-            return;
-        }
-
-        setSuccess(true);
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setEnquiry(false);
-        setRequest(false);
-        setMessage('');
-        setIsChecked(false);
     };
 
     return (
@@ -109,12 +79,12 @@ const Contact = () => {
                                 value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
                                 required
-                                className={`px-2 py-4 focus:outline-none border ${errMsg ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md`}
+                                className={`px-2 py-4 focus:outline-none border 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md`}
                             />
                             <p
-                                className={`text-red text-xs ${errMsg ? 'block' : 'hidden'}`}
+                                className={`text-red text-xs ${error ? 'block' : 'hidden'}`}
                             >
-                                {errMsg}
+                                {error}
                             </p>
                         </div>
                         {/*LAST NAME */}
@@ -134,12 +104,12 @@ const Contact = () => {
                                 value={lastName}
                                 onChange={(e) => setLastName(e.target.value)}
                                 required
-                                className={`px-3 py-4 focus:outline-none border ${errMsg ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer  rounded-md`}
+                                className={`px-3 py-4 focus:outline-none border ${error ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer  rounded-md`}
                             />
                             <p
-                                className={`text-red text-xs ${errMsg ? 'block' : 'hidden'}`}
+                                className={`text-red text-xs ${error ? 'block' : 'hidden'}`}
                             >
-                                {errMsg}
+                                {error}
                             </p>
                         </div>
                     </div>
@@ -158,12 +128,12 @@ const Contact = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className={`px-3 py-4 focus:outline-none border ${errMsg && validEmail ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md`}
+                            className={`px-3 py-4 focus:outline-none border ${error && validEmail ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md`}
                         />
                         <p
-                            className={`text - red text-xs ${errMsg && validEmail ? 'block' : 'hidden'}`}
+                            className={`text - red text-xs ${error && validEmail ? 'block' : 'hidden'}`}
                         >
-                            {errMsg}
+                            {error}
                         </p>
                     </div>
 
@@ -217,9 +187,9 @@ const Contact = () => {
                             </button>
                         </div>
                         <p
-                            className={`text-red text-xs ${errMsg && enquiry && request ? 'block' : 'hidden'}`}
+                            className={`text-red text-xs ${error && enquiry && request ? 'block' : 'hidden'}`}
                         >
-                            {errMsg}
+                            {error}
                         </p>
                     </div>
                     {/*MESSAGE SECTION*/}
@@ -237,10 +207,10 @@ const Contact = () => {
                             onChange={(e) => setMessage(e.target.value)}
                             required
                             rows="4"
-                            className={`px-3 py-4 focus:outline-none border ${errMsg ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md resize-none`}
+                            className={`px-3 py-4 focus:outline-none border ${error ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md resize-none`}
                         />
                         <p
-                            className={`text-red text-xs ${errMsg ? 'block' : 'hidden'}`}
+                            className={`text-red text-xs ${error ? 'block' : 'hidden'}`}
                         >
                             This field is required
                         </p>
@@ -271,9 +241,9 @@ const Contact = () => {
                             </label>
                         </div>
                         <p
-                            className={`text-red text-xs ${errMsg ? 'block' : 'hidden'} `}
+                            className={`text-red text-xs ${error ? 'block' : 'hidden'} `}
                         >
-                            {errMsg}
+                            {error}
                         </p>
                     </div>
                     {/*SUBMIT BUTTON SECTION*/}
