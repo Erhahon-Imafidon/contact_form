@@ -7,6 +7,8 @@ import Checkbox from '../assets/images/icon-checkbox-check.svg';
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const Contact = () => {
+    const errRef = useRef();
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -17,6 +19,7 @@ const Contact = () => {
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
 
+    // Error state for tracking individual field errors
     const [error, setError] = useState({
         firstName: false,
         lastName: false,
@@ -33,71 +36,59 @@ const Contact = () => {
         setValidEmail(result);
     }, [email]);
 
+    useEffect(() => {
+        // Validate  consent only if it were previously invalid
+
+        setError((prevError) => ({
+            consent: prevError.consent && !isChecked,
+        }));
+    }, [enquiry, request, isChecked]);
+
     // Enquiry Function
     const handleEnquiryClick = () => {
         setEnquiry(true);
         setRequest(false);
+        setError((prevError) => ({ ...prevError, queryType: false }));
     };
 
     // Request Function
     const handleRequestClick = () => {
         setEnquiry(false);
         setRequest(true);
+        setError((prevError) => ({ ...prevError, queryType: false }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Reset error and success states
-        setError({
-            firstName: false,
-            lastName: false,
-            email: false,
-            queryType: false,
-            message: false,
-            consent: false,
-        });
-        setSuccess(false);
+        // Validation
+        const newErrorState = {
+            firstName: firstName.trim() === '',
+            lastName: lastName.trim() === '',
+            email: !email.trim() || !validEmail,
+            queryType: !enquiry && !request,
+            message: message.trim() === '',
+            consent: !isChecked,
+        };
 
-        // Input Validation
-        if (!firstName.trim()) {
-            setError((prevErrors) => ({ ...prevErrors, firstName: true }));
+        // update the error state
+        setError(newErrorState);
+
+        // If Form is valid
+        const formIsValid = !Object.values(newErrorState).includes(true);
+
+        if (formIsValid) {
+            setSuccess(true);
+            setFirstName('');
+            setLastName('');
+            setEmail('');
+            setEnquiry(false);
+            setRequest(false);
+            setMessage('');
+            setIsChecked(false);
+        } else {
+            setSuccess(false);
         }
-
-        if (!lastName.trim()) {
-            setError((prevErrors) => ({ ...prevErrors, lastName: true }));
-        }
-
-        if (!validEmail) {
-            setError((prevErrors) => ({ ...prevErrors, email: true }));
-        }
-
-        if (!enquiry && !request) {
-            setError((prevErrors) => ({ ...prevErrors, queryType: true }));
-        }
-
-        if (!message.trim()) {
-            setError((prevErrors) => ({ ...prevErrors, message: true }));
-        }
-
-        if (!isChecked) {
-            setError((prevErrors) => ({ ...prevErrors, consent: true }));
-        }
-
-        // If any errors exist, prevent submission
-        if (Object.values(error).some((error) => error)) {
-            return;
-        }
-
-        setSuccess(true);
-        setError(false);
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setEnquiry(false);
-        setRequest(false);
-        setMessage('');
-        setIsChecked(false);
     };
 
     return (
@@ -133,8 +124,13 @@ const Contact = () => {
                                 type="text"
                                 id="firstname"
                                 value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
-                                required
+                                onChange={(e) => {
+                                    setFirstName(e.target.value);
+                                    setError((prevError) => ({
+                                        ...prevError,
+                                        firstName: false,
+                                    }));
+                                }}
                                 className={`px-2 py-4 focus:outline-none border ${error.firstName ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md`}
                             />
                             <p
@@ -146,7 +142,7 @@ const Contact = () => {
                         {/*LAST NAME */}
                         <div className="flex flex-col w-full md:w-1/2 space-y-2">
                             <label
-                                htmlFor="firstname"
+                                htmlFor="lastname"
                                 className="text-base text-grey-dark"
                             >
                                 Last Name
@@ -156,10 +152,15 @@ const Contact = () => {
                             </label>
                             <input
                                 type="text"
-                                id="firstname"
+                                id="lastname"
                                 value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                                required
+                                onChange={(e) => {
+                                    setLastName(e.target.value);
+                                    setError((prevError) => ({
+                                        ...prevError,
+                                        lastName: false,
+                                    }));
+                                }}
                                 className={`px-3 py-4 focus:outline-none border ${error.lastName ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer  rounded-md`}
                             />
                             <p
@@ -182,12 +183,17 @@ const Contact = () => {
                             type="text"
                             id="email"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                                setError((prevError) => ({
+                                    ...prevError,
+                                    email: false,
+                                }));
+                            }}
                             className={`px-3 py-4 focus:outline-none border ${error.email ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md`}
                         />
                         <p
-                            className={`text - red text-xs ${error.email ? 'block' : 'hidden'}`}
+                            className={`text-red text-xs ${error.email ? 'block' : 'hidden'}`}
                         >
                             Please enter a valid email address
                         </p>
@@ -207,11 +213,9 @@ const Contact = () => {
                             <button
                                 onClick={handleEnquiryClick}
                                 type="button"
-                                className={
-                                    enquiry
-                                        ? 'bg-green-light text-white w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md'
-                                        : 'w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md'
-                                }
+                                className={`w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md ${
+                                    enquiry ? 'bg-green-light text-white' : ''
+                                }`}
                             >
                                 {!enquiry ? (
                                     <div className="w-4 h-4 rounded-full border border-green-default"></div>
@@ -226,11 +230,9 @@ const Contact = () => {
                             <button
                                 onClick={handleRequestClick}
                                 type="button"
-                                className={
-                                    request
-                                        ? 'bg-green-light text-white w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md'
-                                        : 'w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md'
-                                }
+                                className={`w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md ${
+                                    request ? 'bg-green-light text-white' : ''
+                                }`}
                             >
                                 {!request ? (
                                     <div className="w-4 h-4 rounded-full border border-green-default"></div>
@@ -242,11 +244,11 @@ const Contact = () => {
                                 </p>
                             </button>
                         </div>
-                        <p
-                            className={`text-red text-xs ${error.queryType ? 'block' : 'hidden'}`}
-                        >
-                            Please select a query type
-                        </p>
+                        {error.queryType && (
+                            <p className={`text-red text-xs`}>
+                                Please select a query type
+                            </p>
+                        )}
                     </div>
                     {/*MESSAGE SECTION*/}
                     <div className="flex flex-col w-full space-y-2">
@@ -260,8 +262,13 @@ const Contact = () => {
                         <textarea
                             id="message"
                             value={message}
-                            onChange={(e) => setMessage(e.target.value)}
-                            required
+                            onChange={(e) => {
+                                setMessage(e.target.value);
+                                setError((prevState) => ({
+                                    ...prevState,
+                                    message: false,
+                                }));
+                            }}
                             rows="4"
                             className={`px-3 py-4 focus:outline-none border ${error.message ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md resize-none`}
                         />
@@ -296,10 +303,12 @@ const Contact = () => {
                                 </span>
                             </label>
                         </div>
-                        <p className="text-red text-xs hidden">
-                            To submit this form, please consent to being
-                            contacted
-                        </p>
+                        {error.consent && (
+                            <p className="text-red text-xs">
+                                To submit this form, please consent to being
+                                contacted
+                            </p>
+                        )}
                     </div>
                     {/*SUBMIT BUTTON SECTION*/}
                     <button
