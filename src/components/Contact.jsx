@@ -19,7 +19,7 @@ const Contact = () => {
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
 
-    const [error, setError] = useState({});
+    const [error, setError] = useState();
 
     // Effect to verify the email
     useEffect(() => {
@@ -81,11 +81,7 @@ const Contact = () => {
                                 required
                                 className={`px-2 py-4 focus:outline-none border 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md`}
                             />
-                            <p
-                                className={`text-red text-xs ${error ? 'block' : 'hidden'}`}
-                            >
-                                {error}
-                            </p>
+                            <p className={`text-red text-xs`}>{error}</p>
                         </div>
                         {/*LAST NAME */}
                         <div className="flex flex-col w-full md:w-1/2 space-y-2">
@@ -106,11 +102,7 @@ const Contact = () => {
                                 required
                                 className={`px-3 py-4 focus:outline-none border ${error ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer  rounded-md`}
                             />
-                            <p
-                                className={`text-red text-xs ${error ? 'block' : 'hidden'}`}
-                            >
-                                {error}
-                            </p>
+                            <p className={`text-red text-xs`}>{error}</p>
                         </div>
                     </div>
                     {/*EMAIL SECTION*/}
@@ -209,9 +201,7 @@ const Contact = () => {
                             rows="4"
                             className={`px-3 py-4 focus:outline-none border ${error ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md resize-none`}
                         />
-                        <p
-                            className={`text-red text-xs ${error ? 'block' : 'hidden'}`}
-                        >
+                        <p className={`text-red text-xs`}>
                             This field is required
                         </p>
                     </div>
@@ -240,11 +230,7 @@ const Contact = () => {
                                 </span>
                             </label>
                         </div>
-                        <p
-                            className={`text-red text-xs ${error ? 'block' : 'hidden'} `}
-                        >
-                            {error}
-                        </p>
+                        <p className={`text-red text-xs `}>{error}</p>
                     </div>
                     {/*SUBMIT BUTTON SECTION*/}
                     <button
