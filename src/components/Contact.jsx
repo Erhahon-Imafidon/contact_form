@@ -32,9 +32,11 @@ const Contact = () => {
 
     // Effect to verify the email
     useEffect(() => {
+        const isValidEmail = EMAIL_REGEX.test(formData.email);
+
         setError((prevError) => ({
             ...prevError,
-            email: formData.email && !EMAIL_REGEX.test(formData.email),
+            email: formData.email !== '' && !isValidEmail,
         }));
     }, [formData.email]);
 
