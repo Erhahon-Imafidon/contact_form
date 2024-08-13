@@ -18,15 +18,6 @@ const Contact = () => {
         consent: false,
     });
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [validEmail, setValidEmail] = useState(false);
-    const [enquiry, setEnquiry] = useState(false);
-    const [request, setRequest] = useState(false);
-    const [isChecked, setIsChecked] = useState(false);
-    const [message, setMessage] = useState('');
-
     const [success, setSuccess] = useState(false);
 
     // Error state for tracking individual field errors
@@ -41,31 +32,53 @@ const Contact = () => {
 
     // Effect to verify the email
     useEffect(() => {
-        const result = EMAIL_REGEX.test(email);
-        console.log(result);
-        setValidEmail(result);
-    }, [email]);
-
-    useEffect(() => {
-        // Validate  consent only if it were previously invalid
-
         setError((prevError) => ({
-            consent: prevError.consent && !isChecked,
+            ...prevError,
+            email: formData.email && !EMAIL_REGEX.test(formData.email),
         }));
-    }, [enquiry, request, isChecked]);
+    }, [formData.email]);
 
-    // Enquiry Function
-    const handleEnquiryClick = () => {
-        setEnquiry(true);
-        setRequest(false);
-        setError((prevError) => ({ ...prevError, queryType: false }));
+    // Handle changes in the Input fields
+    const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [id]: value,
+        }));
+
+        // Reset the error state for the specific field
+        setError((prevError) => ({
+            ...prevError,
+            [id]: false,
+        }));
     };
 
-    // Request Function
-    const handleRequestClick = () => {
-        setEnquiry(false);
-        setRequest(true);
-        setError((prevError) => ({ ...prevError, queryType: false }));
+    // Handle query type selection
+    const handleQueryType = (type) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            queryType: type,
+        }));
+
+        // Reset query type error
+        setError((prevData) => ({
+            ...prevData,
+            queryType: false,
+        }));
+    };
+
+    // Handle Consent Checkbox
+    const handleConsentCheck = () => {
+        setFormData((prevData) => ({
+            ...prevData,
+            consent: !prevData.consent,
+        }));
+
+        // Reset consent error
+        setError((prevData) => ({
+            ...prevData,
+            consent: false,
+        }));
     };
 
     const handleSubmit = (e) => {
@@ -73,12 +86,12 @@ const Contact = () => {
 
         // Validation
         const newErrorState = {
-            firstName: firstName.trim() === '',
-            lastName: lastName.trim() === '',
-            email: !email.trim() || !validEmail,
-            queryType: !enquiry && !request,
-            message: message.trim() === '',
-            consent: !isChecked,
+            firstName: formData.firstName.trim() === '',
+            lastName: formData.lastName.trim() === '',
+            email: formData.email.trim() || !EMAIL_REGEX.test(formData.email),
+            queryType: formData.queryType.trim() === '',
+            message: formData.message.trim() === '',
+            consent: !formData.consent,
         };
 
         // update the error state
@@ -89,13 +102,14 @@ const Contact = () => {
 
         if (formIsValid) {
             setSuccess(true);
-            setFirstName('');
-            setLastName('');
-            setEmail('');
-            setEnquiry(false);
-            setRequest(false);
-            setMessage('');
-            setIsChecked(false);
+            setFormData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                message: '',
+                queryType: '',
+                consent: false,
+            });
         } else {
             setSuccess(false);
         }
@@ -132,15 +146,9 @@ const Contact = () => {
                             </label>
                             <input
                                 type="text"
-                                id="firstname"
-                                value={firstName}
-                                onChange={(e) => {
-                                    setFirstName(e.target.value);
-                                    setError((prevError) => ({
-                                        ...prevError,
-                                        firstName: false,
-                                    }));
-                                }}
+                                id="firstName"
+                                value={formData.firstName}
+                                onChange={handleInputChange}
                                 className={`px-2 py-4 focus:outline-none border ${error.firstName ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md`}
                             />
                             <p
@@ -152,7 +160,7 @@ const Contact = () => {
                         {/*LAST NAME */}
                         <div className="flex flex-col w-full md:w-1/2 space-y-2">
                             <label
-                                htmlFor="lastname"
+                                htmlFor="lastName"
                                 className="text-base text-grey-dark"
                             >
                                 Last Name
@@ -162,15 +170,9 @@ const Contact = () => {
                             </label>
                             <input
                                 type="text"
-                                id="lastname"
-                                value={lastName}
-                                onChange={(e) => {
-                                    setLastName(e.target.value);
-                                    setError((prevError) => ({
-                                        ...prevError,
-                                        lastName: false,
-                                    }));
-                                }}
+                                id="lastName"
+                                value={formData.lastName}
+                                onChange={handleInputChange}
                                 className={`px-3 py-4 focus:outline-none border ${error.lastName ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer  rounded-md`}
                             />
                             <p
@@ -192,14 +194,8 @@ const Contact = () => {
                         <input
                             type="text"
                             id="email"
-                            value={email}
-                            onChange={(e) => {
-                                setEmail(e.target.value);
-                                setError((prevError) => ({
-                                    ...prevError,
-                                    email: false,
-                                }));
-                            }}
+                            value={formData.email}
+                            onChange={handleInputChange}
                             className={`px-3 py-4 focus:outline-none border ${error.email ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md`}
                         />
                         <p
@@ -221,13 +217,15 @@ const Contact = () => {
                         <div className="flex flex-col w-full md:flex-row space-y-4 md:space-y-0 md:space-x-3">
                             {/*GENERAL ENQUIRY*/}
                             <button
-                                onClick={handleEnquiryClick}
+                                onClick={() => handleQueryType('enquiry')}
                                 type="button"
                                 className={`w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md ${
-                                    enquiry ? 'bg-green-light text-white' : ''
+                                    formData.queryType === 'enquiry'
+                                        ? 'bg-green-light text-white'
+                                        : ''
                                 }`}
                             >
-                                {!enquiry ? (
+                                {formData.queryType !== 'enquiry' ? (
                                     <div className="w-4 h-4 rounded-full border border-green-default"></div>
                                 ) : (
                                     <RadioButton />
@@ -238,13 +236,15 @@ const Contact = () => {
                             </button>
                             {/*SUPPORT REQUEST */}
                             <button
-                                onClick={handleRequestClick}
+                                onClick={() => handleQueryType('request')}
                                 type="button"
                                 className={`w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md ${
-                                    request ? 'bg-green-light text-white' : ''
+                                    formData.queryType === 'request'
+                                        ? 'bg-green-light text-white'
+                                        : ''
                                 }`}
                             >
-                                {!request ? (
+                                {formData.queryType !== 'request' ? (
                                     <div className="w-4 h-4 rounded-full border border-green-default"></div>
                                 ) : (
                                     <RadioButton />
@@ -271,14 +271,8 @@ const Contact = () => {
                         </label>
                         <textarea
                             id="message"
-                            value={message}
-                            onChange={(e) => {
-                                setMessage(e.target.value);
-                                setError((prevState) => ({
-                                    ...prevState,
-                                    message: false,
-                                }));
-                            }}
+                            value={formData.message}
+                            onChange={handleInputChange}
                             rows="4"
                             className={`px-3 py-4 focus:outline-none border ${error.message ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md resize-none`}
                         />
@@ -294,9 +288,9 @@ const Contact = () => {
                             <button
                                 type="button"
                                 id="consent"
-                                onClick={() => setIsChecked(!isChecked)}
+                                onClick={handleConsentCheck}
                             >
-                                {!isChecked ? (
+                                {!formData.consent ? (
                                     <div className="w-4 h-4 border border-green-default"></div>
                                 ) : (
                                     <Checkbox className="w-4" />
