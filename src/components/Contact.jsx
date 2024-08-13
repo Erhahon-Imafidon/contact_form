@@ -9,6 +9,15 @@ const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const Contact = () => {
     const errRef = useRef();
 
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        message: '',
+        queryType: '', // Possible values: 'enquiry', 'request'
+        consent: false,
+    });
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -17,6 +26,7 @@ const Contact = () => {
     const [request, setRequest] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [message, setMessage] = useState('');
+
     const [success, setSuccess] = useState(false);
 
     // Error state for tracking individual field errors
