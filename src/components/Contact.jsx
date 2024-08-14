@@ -114,6 +114,7 @@ const Contact = () => {
             });
         } else {
             setSuccess(false);
+            errRef.current?.focus();
         }
     };
 
@@ -154,6 +155,7 @@ const Contact = () => {
                                 className={`px-2 py-4 focus:outline-none border ${error.firstName ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md`}
                             />
                             <p
+                                ref={errRef}
                                 className={`text-red text-xs ${error.firstName ? 'block' : 'hidden'}`}
                             >
                                 This field is required
@@ -178,6 +180,7 @@ const Contact = () => {
                                 className={`px-3 py-4 focus:outline-none border ${error.lastName ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer  rounded-md`}
                             />
                             <p
+                                ref={errRef}
                                 className={`text-red text-xs ${error.lastName ? 'block' : 'hidden'}`}
                             >
                                 This field is required
@@ -201,6 +204,7 @@ const Contact = () => {
                             className={`px-3 py-4 focus:outline-none border ${error.email ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md`}
                         />
                         <p
+                            ref={errRef}
                             className={`text-red text-xs ${error.email ? 'block' : 'hidden'}`}
                         >
                             Please enter a valid email address
@@ -257,7 +261,7 @@ const Contact = () => {
                             </button>
                         </div>
                         {error.queryType && (
-                            <p className={`text-red text-xs`}>
+                            <p ref={errRef} className={`text-red text-xs`}>
                                 Please select a query type
                             </p>
                         )}
@@ -279,6 +283,7 @@ const Contact = () => {
                             className={`px-3 py-4 focus:outline-none border ${error.message ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md resize-none`}
                         />
                         <p
+                            ref={errRef}
                             className={`text-red text-xs ${error.message ? 'block' : 'hidden'}`}
                         >
                             This field is required
@@ -310,7 +315,7 @@ const Contact = () => {
                             </label>
                         </div>
                         {error.consent && (
-                            <p className="text-red text-xs">
+                            <p ref={errRef} className="text-red text-xs">
                                 To submit this form, please consent to being
                                 contacted
                             </p>
