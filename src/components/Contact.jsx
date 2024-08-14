@@ -90,7 +90,7 @@ const Contact = () => {
         const newErrorState = {
             firstName: formData.firstName.trim() === '',
             lastName: formData.lastName.trim() === '',
-            email: formData.email.trim() || !EMAIL_REGEX.test(formData.email),
+            email: !formData.email.trim() || !EMAIL_REGEX.test(formData.email),
             queryType: formData.queryType.trim() === '',
             message: formData.message.trim() === '',
             consent: !formData.consent,
