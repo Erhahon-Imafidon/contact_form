@@ -152,10 +152,14 @@ const Contact = () => {
                                 id="firstName"
                                 value={formData.firstName}
                                 onChange={handleInputChange}
+                                aria-describedby={'firstNameError'} // Associate with error message
+                                aria-invalid={error.firstName} // Indicate Invalid state
                                 className={`px-2 py-4 focus:outline-none border ${error.firstName ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md`}
                             />
                             <p
-                                ref={errRef}
+                                id={'firstNameError'} // Adds ID for association
+                                role="alert" // Indicate it's an error message
+                                aria-live={'assertive'} // Announces the changes Immediately by screen readers
                                 className={`text-red text-xs ${error.firstName ? 'block' : 'hidden'}`}
                             >
                                 This field is required
@@ -177,10 +181,14 @@ const Contact = () => {
                                 id="lastName"
                                 value={formData.lastName}
                                 onChange={handleInputChange}
+                                aria-describedby={'lastNameError'}
+                                aria-invalid={error.lastName}
                                 className={`px-3 py-4 focus:outline-none border ${error.lastName ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer  rounded-md`}
                             />
                             <p
-                                ref={errRef}
+                                id={'lastNameError'}
+                                role="alert"
+                                aria-live={'assertive'}
                                 className={`text-red text-xs ${error.lastName ? 'block' : 'hidden'}`}
                             >
                                 This field is required
@@ -201,10 +209,14 @@ const Contact = () => {
                             id="email"
                             value={formData.email}
                             onChange={handleInputChange}
+                            aria-describedby={'emailError'}
+                            aria-invalid={error.email}
                             className={`px-3 py-4 focus:outline-none border ${error.email ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md`}
                         />
                         <p
-                            ref={errRef}
+                            id={'emailError'}
+                            role="alert"
+                            aria-live={'assertive'}
                             className={`text-red text-xs ${error.email ? 'block' : 'hidden'}`}
                         >
                             Please enter a valid email address
@@ -220,11 +232,23 @@ const Contact = () => {
                             Query Type
                             <span className="ml-2 text-green-medium">*</span>
                         </label>
-                        <div className="flex flex-col w-full md:flex-row space-y-4 md:space-y-0 md:space-x-3">
+                        <fieldset
+                            role={'radiogroup'}
+                            aria-labelledby={'queryLabel'}
+                            aria-invalid={error.queryType}
+                            className="flex flex-col w-full md:flex-row space-y-4 md:space-y-0 md:space-x-3"
+                        >
+                            <legend id={'queryLabel'} className={'sr-only'}>
+                                {/* Hidden label for screen readers */}
+                                Query Type
+                            </legend>
                             {/*GENERAL ENQUIRY*/}
                             <button
                                 onClick={() => handleQueryType('enquiry')}
                                 type="button"
+                                role={'radio'}
+                                aria-checked={formData.queryType === 'enquiry'}
+                                aria-describedby={'queryTypeError'}
                                 className={`w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md ${
                                     formData.queryType === 'enquiry'
                                         ? 'bg-green-light text-white'
@@ -244,6 +268,9 @@ const Contact = () => {
                             <button
                                 onClick={() => handleQueryType('request')}
                                 type="button"
+                                role={'radio'}
+                                aria-checked={formData.queryType === 'request'}
+                                aria-describedby={'queryTypeError'}
                                 className={`w-full md:w-1/2 space-x-2 pl-6 py-4 flex flex-row items-center border border-green-light hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md ${
                                     formData.queryType === 'request'
                                         ? 'bg-green-light text-white'
@@ -259,9 +286,15 @@ const Contact = () => {
                                     Support Request
                                 </p>
                             </button>
-                        </div>
+                        </fieldset>
                         {error.queryType && (
-                            <p ref={errRef} className={`text-red text-xs`}>
+                            <p
+                                ref={errRef}
+                                role={'alert'}
+                                aria-live={'assertive'}
+                                id={'queryTypeError'}
+                                className={`text-red text-xs`}
+                            >
                                 Please select a query type
                             </p>
                         )}
@@ -280,10 +313,14 @@ const Contact = () => {
                             value={formData.message}
                             onChange={handleInputChange}
                             rows="4"
+                            aria-describedby={'messageError'}
+                            aria-invalid={error.message}
                             className={`px-3 py-4 focus:outline-none border ${error.message ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md resize-none`}
                         />
                         <p
-                            ref={errRef}
+                            id={'messageError'}
+                            role={'alert'}
+                            aria-live={'assertive'}
                             className={`text-red text-xs ${error.message ? 'block' : 'hidden'}`}
                         >
                             This field is required
@@ -292,9 +329,18 @@ const Contact = () => {
                     {/*CONSENT SECTION*/}
                     <div>
                         <div className="flex items-center py-4 w-full space-x-4">
-                            <button
-                                type="button"
-                                id="consent"
+                            <div
+                                role={'checkbox'}
+                                aria-checked={formData.consent}
+                                aria-labelledby={'consentLabel'}
+                                aria-describedby={'consentError'}
+                                tabIndex="0" // To make it focusable
+                                onKeyDown={(e) => {
+                                    if (e.key === ' ' || e.key === 'Enter') {
+                                        e.preventDefault();
+                                        handleConsentCheck();
+                                    }
+                                }}
                                 onClick={handleConsentCheck}
                             >
                                 {!formData.consent ? (
@@ -302,12 +348,9 @@ const Contact = () => {
                                 ) : (
                                     <Checkbox className="w-4" />
                                 )}
-                            </button>
+                            </div>
 
-                            <label
-                                htmlFor="consent"
-                                className="text-base text-grey-dark"
-                            >
+                            <label className="text-base text-grey-dark">
                                 I consent to being contacted by the team
                                 <span className="ml-2 text-green-medium">
                                     *
@@ -315,7 +358,13 @@ const Contact = () => {
                             </label>
                         </div>
                         {error.consent && (
-                            <p ref={errRef} className="text-red text-xs">
+                            <p
+                                ref={errRef}
+                                role={'alert'}
+                                aria-live={'assertive'}
+                                id={'consentError'}
+                                className="text-red text-xs"
+                            >
                                 To submit this form, please consent to being
                                 contacted
                             </p>
