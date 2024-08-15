@@ -330,7 +330,8 @@ const Contact = () => {
                     {/*CONSENT SECTION*/}
                     <div>
                         <div className="flex items-center py-4 w-full space-x-4">
-                            <div
+                            <button
+                                type="button"
                                 role={'checkbox'}
                                 aria-checked={formData.consent}
                                 aria-labelledby={'consentLabel'}
@@ -349,7 +350,7 @@ const Contact = () => {
                                 ) : (
                                     <Checkbox className="w-4" />
                                 )}
-                            </div>
+                            </button>
 
                             <label className="text-base text-grey-dark">
                                 I consent to being contacted by the team
