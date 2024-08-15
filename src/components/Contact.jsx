@@ -154,7 +154,7 @@ const Contact = () => {
                                 onChange={handleInputChange}
                                 aria-describedby={'firstNameError'} // Associate with error message
                                 aria-invalid={error.firstName} // Indicate Invalid state
-                                className={`px-2 py-4 focus:outline-none border ${error.firstName ? 'border-red' : 'border-green-light'} hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md`}
+                                className={`px-2 py-4 focus:outline-none border ${error.firstName ? 'border-red' : 'border-green-light'} text-base text-grey-dark hover:border-green-medium hover:cursor-pointer focus:border-green-medium rounded-md`}
                             />
                             <p
                                 id={'firstNameError'} // Adds ID for association
@@ -183,7 +183,7 @@ const Contact = () => {
                                 onChange={handleInputChange}
                                 aria-describedby={'lastNameError'}
                                 aria-invalid={error.lastName}
-                                className={`px-3 py-4 focus:outline-none border ${error.lastName ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer  rounded-md`}
+                                className={`px-3 py-4 focus:outline-none border ${error.lastName ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer text-base text-grey-dark rounded-md`}
                             />
                             <p
                                 id={'lastNameError'}
@@ -211,7 +211,8 @@ const Contact = () => {
                             onChange={handleInputChange}
                             aria-describedby={'emailError'}
                             aria-invalid={error.email}
-                            className={`px-3 py-4 focus:outline-none border ${error.email ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md`}
+                            className={`px-3 py-4 focus:outline-none border ${error.email ? 'border-red' : 'border-green-light'} hover:border-green-medium focus:border-green-medium hover:cursor-pointer rounded-md placeholder:text-grey-dark placeholder:text-base`}
+                            placeholder={`${error.email ? 'email@example.com' : ''}`}
                         />
                         <p
                             id={'emailError'}
