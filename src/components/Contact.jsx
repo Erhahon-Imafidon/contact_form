@@ -126,7 +126,7 @@ const Contact = () => {
                     subTitle="Thanks for completing the form we'll be in touch soon"
                 />
             ) : null}
-            <section className="container px-4 md:px-8 w-full min-h-screen md:h-screen lg:w-1/2  flex flex-col p-8 bg-white rounded-xl">
+            <section className="container px-4 md:px-8 py-8 w-full h-full lg:w-1/2 flex flex-col bg-white rounded-xl">
                 <h1 className="font-karla text-2xl text-grey-dark font-bold">
                     Contact Us
                 </h1>
