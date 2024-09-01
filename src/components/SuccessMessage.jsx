@@ -15,7 +15,7 @@ const SuccessMsg = ({ title, subTitle }) => {
             role="alert"
             aria-live={'assertive'} // Announces changes immediately
             tabIndex={-1} // Make it focusable even though it's not an interactive element
-            className="bg-grey-dark w-full lg:w-[27rem] mx-auto rounded-xl flex flex-col justify-center px-4 py-6 font-karla"
+            className="bg-grey-dark w-full lg:w-[27rem] mx-auto rounded-xl flex flex-col justify-center px-4 py-6 font-karla mb-2 md:mb-0"
         >
             <div className="flex items-center space-x-2">
                 <SuccessCheck />

@@ -2,7 +2,7 @@ import Contact from './components/Contact';
 
 const App = () => {
     return (
-        <main className="bg-green-light p-4 lg:py-20 w-full h-screen flex flex-col justify-center items-center">
+        <main className="container px-4 py-4 overflow-y-auto bg-green-light lg:py-20 w-full min-h-screen flex flex-col justify-center items-center">
             <Contact />
         </main>
     );
