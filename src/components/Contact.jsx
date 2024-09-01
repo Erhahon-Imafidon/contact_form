@@ -352,7 +352,11 @@ const Contact = () => {
                                 )}
                             </button>
 
-                            <label className="text-base text-grey-dark">
+                            <label
+                                className="text-base text-grey-dark hover:cursor-pointer "
+                                onClick={handleConsentCheck} // Make the text clickable
+                                style={{ pointerEvents: 'all' }} // Ensure pointer events are enabled for this label
+                            >
                                 I consent to being contacted by the team
                                 <span className="ml-2 text-green-medium">
                                     *
