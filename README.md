@@ -56,16 +56,19 @@ It is follows the WCAG guidelines for accessibility. This involves using semanti
 - [Vite](https://vitejs.dev/) - Build tool for modern web development
 
 ### What I Learned
-> I Learned how state managment actually works
-> How and when to use useEffect and useState hooks
-> How to update an object Array works without using non-mutating methods like map, filter, reduce etc. 
-> I reinforced my knowledge of Tailwind CSS and how to use it to style a webpage and it mobile first workflow
+- I Learned how state management actually works
+- How and when to use useEffect and useState hooks
+- How to update an object Array works without using non-mutating methods like map, filter, reduce etc. 
+- I reinforced my knowledge of Tailwind CSS and how to use it to style a webpage and it mobile first workflow
+- I actually learnt markdown language because of this course
+- I improved my knowledge of version control using git and github
 
 
 ### Useful resources
 
 - [React Documentation](https://reactjs.org/docs/getting-started.html) - This helped me understand how to use React and its hooks
 - [Managing State on React.dev](https://react.dev/learn/managing-state) - This article helped me understand how state management works in React and how to use the useState and useEffect hooks
+- [Udemy](https://www.udemy.com/)
 
 ## Author
 
